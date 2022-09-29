@@ -1,7 +1,7 @@
 :root {
   --purple: #8284fa;
   --purple-dark: #5e60ce;
-  --blue: blue;
+  --blue: #4ea8de;
   --blue-dark: #1e6f9f;
 
   --gray-700: #0d0d0d;
@@ -17,4 +17,16 @@
 
 * {
   line-height: 1.4;
+  font-family: "Inter";
+}
+
+body {
+  background: var(--gray-600);
+}
+
+button {
+  border: none;
+  &:hover {
+    cursor: pointer;
+  }
 }

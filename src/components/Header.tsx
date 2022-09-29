@@ -1,5 +1,10 @@
 import styles from "./Header.module.scss";
+import logo from "../assets/logo.svg";
 
 export function Header() {
-  return <div className={styles.teste}>Olá Header</div>;
+  return (
+    <header className={styles.header}>
+      <img src={logo} />
+    </header>
+  );
 }
