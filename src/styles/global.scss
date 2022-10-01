@@ -18,6 +18,7 @@
 * {
   line-height: 1.4;
   font-family: "Inter";
+  box-sizing: border-box;
 }
 
 body {
@@ -29,6 +30,7 @@ button {
   &:hover {
     cursor: pointer;
   }
+  background: transparent;
 }
 
 .main-content {

@@ -1,7 +1,10 @@
 import { ClipboardText } from "phosphor-react";
+import { useState } from "react";
+import { Task } from "./Task";
 import styles from "./TaskList.module.scss";
 
 export function TaskList() {
+  const [taskList, setTaskList] = useState([0, 1, 2]);
   return (
     <>
       <section className={styles.content}>
@@ -12,13 +15,17 @@ export function TaskList() {
           Concluídas <span className={styles.counter}>0</span>
         </div>
       </section>
-      <section className={styles.taskEmpty}>
-        <ClipboardText size={70} />
-        <span>
-          <p>Você ainda não tem tarefas cadastradas</p>
-          <p>Crie tarefas e organize seus itens a fazer</p>
-        </span>
-      </section>
+      {taskList.length == 0 ? (
+        <section className={styles.taskEmpty}>
+          <ClipboardText size={70} />
+          <span>
+            <p>Você ainda não tem tarefas cadastradas</p>
+            <p>Crie tarefas e organize seus itens a fazer</p>
+          </span>
+        </section>
+      ) : (
+        <Task />
+      )}
     </>
   );
 }

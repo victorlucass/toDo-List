@@ -3,6 +3,7 @@
   display: flex;
   justify-content: space-between;
   font-weight: 700;
+  margin-bottom: 1.5rem;
 }
 
 .counter {
@@ -23,7 +24,6 @@
 }
 
 .taskEmpty {
-  margin-top: 1.5rem;
   padding: 4rem 1.5rem;
   border-top: 1px solid var(--gray-400);
   border-radius: 8px;
