@@ -1,21 +1,21 @@
 import { ClipboardText } from "phosphor-react";
-import { useState } from "react";
+import { TaskArray } from "../models/TaskArray";
+import { TaskType } from "../models/TaskType";
 import { Task } from "./Task";
 import styles from "./TaskList.module.scss";
 
-export function TaskList() {
-  const [taskList, setTaskList] = useState([0, 1, 2]);
+export function TaskList({ tasks, deleteMethod }: TaskArray) {
   return (
     <>
       <section className={styles.content}>
         <div className={styles.taskCreate}>
-          Tarefas criadas <span className={styles.counter}>0</span>
+          Tarefas criadas <span className={styles.counter}>{tasks.length}</span>
         </div>
         <div className={styles.done}>
           Concluídas <span className={styles.counter}>0</span>
         </div>
       </section>
-      {taskList.length == 0 ? (
+      {tasks.length == 0 ? (
         <section className={styles.taskEmpty}>
           <ClipboardText size={70} />
           <span>
@@ -24,7 +24,16 @@ export function TaskList() {
           </span>
         </section>
       ) : (
-        <Task />
+        tasks.map((task: TaskType) => {
+          return (
+            <Task
+              id={task.id}
+              text={task.text}
+              key={task.id}
+              onDeleteTask={deleteMethod}
+            />
+          );
+        })
       )}
     </>
   );
