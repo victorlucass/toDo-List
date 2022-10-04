@@ -14,10 +14,10 @@ export function Task({
 
   function handleDeleteTask() {
     onDeleteTask!(id);
-    const newTodoList = stateStatus.toDoList.filter((task: any) => {
+    const newTodoList = stateStatus!.toDoList.filter((task: any) => {
       return task.id != id;
     });
-    stateStatus.setToDoList(newTodoList);
+    stateStatus!.setToDoList(newTodoList);
   }
   function handleChecked() {
     setStatus(!status);

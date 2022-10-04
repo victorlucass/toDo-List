@@ -21,14 +21,14 @@ function App() {
     });
   }
 
-  function deleteTask(id: number) {
+  function deleteTask(id: string) {
     const tasksWithoutDeletedOne = listTask.filter((task) => {
       return task.id != id;
     });
     setlistTask(tasksWithoutDeletedOne);
   }
 
-  function updateStatusTask(id: number, status: boolean) {
+  function updateStatusTask(id: string, status: boolean) {
     const listUpdateTask = [...listTask];
     listUpdateTask.forEach((task, index) => {
       if (task.id == id) {

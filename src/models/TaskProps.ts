@@ -4,7 +4,7 @@ export interface TaskProps {
   isDone: boolean;
   onDeleteTask?: (id: string) => void;
   updateStatusTask?: (id: string, status: boolean) => void;
-  stateStatus: StateStatus;
+  stateStatus?: StateStatus;
 }
 
 interface StateStatus {
