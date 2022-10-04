@@ -1,6 +1,8 @@
 export interface TaskType {
   id: number;
-  text?: string;
+  text: string;
   isDone?: boolean;
-  onDeleteTask: (id: number) => void;
+  onDeleteTask?: (id: number) => void;
+  updateStatusTask?: (id: number, status: boolean) => void;
+  status_?: any;
 }

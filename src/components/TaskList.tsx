@@ -1,10 +1,25 @@
 import { ClipboardText } from "phosphor-react";
+import { useEffect, useState } from "react";
 import { TaskArray } from "../models/TaskArray";
 import { TaskType } from "../models/TaskType";
 import { Task } from "./Task";
 import styles from "./TaskList.module.scss";
 
-export function TaskList({ tasks, deleteMethod }: TaskArray) {
+export function TaskList({
+  tasks,
+  deleteMethod,
+  updateStatusMethod,
+}: TaskArray) {
+  const [tasksDone, setTasksDone] = useState<TaskType[]>([]); //responsavel por pegar as tasks com status "DONE"
+
+  function updateTaskStatus(id: number, status: boolean) {
+    if (updateStatusMethod) {
+      updateStatusMethod(id, status);
+      const todosDones = tasks.filter((task) => task.isDone == true);
+      setTasksDone(todosDones);
+      console.log(todosDones);
+    }
+  }
   return (
     <>
       <section className={styles.content}>
@@ -12,7 +27,10 @@ export function TaskList({ tasks, deleteMethod }: TaskArray) {
           Tarefas criadas <span className={styles.counter}>{tasks.length}</span>
         </div>
         <div className={styles.done}>
-          Concluídas <span className={styles.counter}>0</span>
+          Concluídas{" "}
+          <span className={styles.counter}>
+            {tasksDone.length} de {tasks.length}
+          </span>
         </div>
       </section>
       {tasks.length == 0 ? (
@@ -31,6 +49,8 @@ export function TaskList({ tasks, deleteMethod }: TaskArray) {
               text={task.text}
               key={task.id}
               onDeleteTask={deleteMethod}
+              updateStatusTask={updateTaskStatus}
+              status_={{ tasksDone, setTasksDone }}
             />
           );
         })

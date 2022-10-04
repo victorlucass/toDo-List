@@ -4,6 +4,9 @@ import { ChangeEvent, useState } from "react";
 
 export function NewTask({ createTask }: any) {
   const [inputText, setInputText] = useState<string>("Comprar pão");
+  function handleNewCommentInvalid(event: any) {
+    event.target.setCustomValidity("Campo está vazio!");
+  }
   function handleTextInput(event: ChangeEvent<HTMLInputElement>) {
     setInputText(event.target.value);
   }
@@ -19,8 +22,9 @@ export function NewTask({ createTask }: any) {
         type="text"
         onChange={handleTextInput}
         value={inputText}
+        onInvalid={handleNewCommentInvalid}
       />
-      <button onClick={handleCreateTask}>
+      <button onClick={handleCreateTask} disabled={inputText == ""}>
         Criar <PlusCircle size={24} />
       </button>
     </div>

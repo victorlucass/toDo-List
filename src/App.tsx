@@ -8,6 +8,7 @@ import "./styles/reset.scss";
 
 function App() {
   const [listTask, setListTask] = useState<TaskType[]>([]);
+
   function createTask(text: string) {
     const newTask: TaskType = {
       id: Math.floor(Math.random() * 10000),
@@ -26,12 +27,26 @@ function App() {
     setListTask(tasksWithoutDeletedOne);
   }
 
+  function updateStatusTask(id: number, status: boolean) {
+    const todosArray = [...listTask];
+    for (let i in todosArray) {
+      if (todosArray[i].id == id) {
+        todosArray[i].isDone = !status;
+      }
+    }
+    setListTask(todosArray);
+  }
+
   return (
     <div>
       <Header />
       <main className="main-content">
         <NewTask createTask={createTask} />
-        <TaskList tasks={listTask} deleteMethod={deleteTask} />
+        <TaskList
+          tasks={listTask}
+          deleteMethod={deleteTask}
+          updateStatusMethod={updateStatusTask}
+        />
       </main>
     </div>
   );
