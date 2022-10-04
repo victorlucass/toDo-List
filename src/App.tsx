@@ -2,21 +2,22 @@ import { useState } from "react";
 import { Header } from "./components/Header";
 import { NewTask } from "./components/NewTask";
 import { TaskList } from "./components/TaskList";
-import { TaskType } from "./models/TaskType";
+import { TaskProps } from "./models/TaskProps";
 import "./styles/global.scss";
 import "./styles/reset.scss";
+import { v4 as uuidv4 } from "uuid";
 
 function App() {
-  const [listTask, setListTask] = useState<TaskType[]>([]);
+  const [listTask, setlistTask] = useState<TaskProps[]>([]);
 
-  function createTask(text: string) {
-    const newTask: TaskType = {
-      id: Math.floor(Math.random() * 10000),
-      text: text,
+  function createTask(content: string) {
+    const newTask: TaskProps = {
+      id: uuidv4(),
+      text: content,
       isDone: false,
     };
-    setListTask((value) => {
-      return [...value, newTask];
+    setlistTask((resources) => {
+      return [...resources, newTask];
     });
   }
 
@@ -24,26 +25,26 @@ function App() {
     const tasksWithoutDeletedOne = listTask.filter((task) => {
       return task.id != id;
     });
-    setListTask(tasksWithoutDeletedOne);
+    setlistTask(tasksWithoutDeletedOne);
   }
 
   function updateStatusTask(id: number, status: boolean) {
-    const todosArray = [...listTask];
-    for (let i in todosArray) {
-      if (todosArray[i].id == id) {
-        todosArray[i].isDone = !status;
+    const listUpdateTask = [...listTask];
+    listUpdateTask.forEach((task, index) => {
+      if (task.id == id) {
+        task.isDone = !status;
       }
-    }
-    setListTask(todosArray);
+    });
+    setlistTask(listUpdateTask);
   }
 
   return (
     <div>
       <Header />
       <main className="main-content">
-        <NewTask createTask={createTask} />
+        <NewTask creationMethod={createTask} />
         <TaskList
-          tasks={listTask}
+          listTask={listTask}
           deleteMethod={deleteTask}
           updateStatusMethod={updateStatusTask}
         />

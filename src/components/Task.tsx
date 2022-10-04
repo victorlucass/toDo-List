@@ -1,6 +1,6 @@
 import { Trash } from "phosphor-react";
 import { useState } from "react";
-import { TaskType } from "../models/TaskType";
+import { TaskProps } from "../models/TaskProps";
 import styles from "./Task.module.scss";
 
 export function Task({
@@ -8,18 +8,16 @@ export function Task({
   onDeleteTask,
   text,
   updateStatusTask,
-  status_,
-}: TaskType) {
+  stateStatus,
+}: TaskProps) {
   const [status, setStatus] = useState(false);
 
   function handleDeleteTask() {
-    if (onDeleteTask) {
-      onDeleteTask(id);
-      const newListDone = status_.tasksDone.filter((task: any) => {
-        return task.id != id;
-      });
-      status_.setTasksDone(newListDone);
-    }
+    onDeleteTask!(id);
+    const newTodoList = stateStatus.toDoList.filter((task: any) => {
+      return task.id != id;
+    });
+    stateStatus.setToDoList(newTodoList);
   }
   function handleChecked() {
     setStatus(!status);
@@ -33,11 +31,11 @@ export function Task({
         <input
           type="checkbox"
           checked={status}
-          id={id.toString()}
+          id={id}
           onChange={handleChecked}
         />
         {/* https://www.w3schools.com/howto/howto_css_custom_checkbox.asp */}
-        <label htmlFor={id.toString()}></label>
+        <label htmlFor={id}></label>
         <p className={status ? styles.textChecked : styles.textNotChecked}>
           {text}
         </p>

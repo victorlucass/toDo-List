@@ -1,17 +1,16 @@
 import styles from "./NewTask.module.scss";
 import { PlusCircle } from "phosphor-react";
 import { ChangeEvent, useState } from "react";
+import { NewTaskProps } from "../models/NewTaskProps";
 
-export function NewTask({ createTask }: any) {
-  const [inputText, setInputText] = useState<string>("Comprar pão");
-  function handleNewCommentInvalid(event: any) {
-    event.target.setCustomValidity("Campo está vazio!");
-  }
+export function NewTask({ creationMethod }: NewTaskProps) {
+  const [inputText, setInputText] = useState<string>("");
+
   function handleTextInput(event: ChangeEvent<HTMLInputElement>) {
     setInputText(event.target.value);
   }
   function handleCreateTask() {
-    createTask(inputText);
+    creationMethod(inputText);
     setInputText("");
   }
 
@@ -22,7 +21,6 @@ export function NewTask({ createTask }: any) {
         type="text"
         onChange={handleTextInput}
         value={inputText}
-        onInvalid={handleNewCommentInvalid}
       />
       <button onClick={handleCreateTask} disabled={inputText == ""}>
         Criar <PlusCircle size={24} />
