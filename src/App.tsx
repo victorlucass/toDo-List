@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Header } from "./components/Header";
 import { NewTask } from "./components/NewTask";
 import { TaskList } from "./components/TaskList";
@@ -10,6 +10,11 @@ import { v4 as uuidv4 } from "uuid";
 function App() {
   const [listTask, setlistTask] = useState<TaskProps[]>([]);
 
+  useEffect(() => {
+    const dataLocal = localStorage.getItem("tasks");
+    dataLocal && setlistTask(JSON.parse(dataLocal));
+  }, []);
+
   function createTask(content: string) {
     const newTask: TaskProps = {
       id: uuidv4(),
@@ -17,6 +22,7 @@ function App() {
       isDone: false,
     };
     setlistTask((resources) => {
+      localStorage.setItem("tasks", JSON.stringify([...resources, newTask]));
       return [...resources, newTask];
     });
   }
@@ -26,6 +32,7 @@ function App() {
       return task.id != id;
     });
     setlistTask(tasksWithoutDeletedOne);
+    localStorage.setItem("tasks", JSON.stringify(tasksWithoutDeletedOne));
   }
 
   function updateStatusTask(id: string, status: boolean) {
@@ -35,6 +42,7 @@ function App() {
         task.isDone = !status;
       }
     });
+    localStorage.setItem("tasks", JSON.stringify(listUpdateTask));
     setlistTask(listUpdateTask);
   }
 

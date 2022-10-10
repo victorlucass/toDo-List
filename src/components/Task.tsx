@@ -1,5 +1,5 @@
 import { Trash } from "phosphor-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { TaskProps } from "../models/TaskProps";
 import styles from "./Task.module.scss";
 
@@ -12,6 +12,17 @@ export function Task({
 }: TaskProps) {
   const [status, setStatus] = useState(false);
 
+  useEffect(() => {
+    const dataLocal = localStorage.getItem("tasks");
+    if (dataLocal) {
+      const dataLocalObject = JSON.parse(dataLocal);
+      const dataLocalSelect: TaskProps[] = dataLocalObject.filter(
+        (data: TaskProps) => data.id == id
+      );
+      dataLocalSelect && setStatus(dataLocalSelect[0].isDone);
+    }
+  }, []);
+
   function handleDeleteTask() {
     onDeleteTask!(id);
     const newTodoList = stateStatus!.toDoList.filter((task: any) => {
@@ -21,9 +32,7 @@ export function Task({
   }
   function handleChecked() {
     setStatus(!status);
-    if (updateStatusTask) {
-      updateStatusTask(id, status);
-    }
+    updateStatusTask!(id, status);
   }
   return (
     <section className={styles.content}>
